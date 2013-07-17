@@ -6,5 +6,10 @@
 	}
 	
 	#multiple-content-blocks-box input[type=text] {
-	  width:100%;
+		width:100%;
+	}
+	
+	#multiple-content-blocks-box textarea {
+		width:100%;
+		min-height:80px;
 	}

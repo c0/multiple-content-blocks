@@ -50,20 +50,26 @@ class MCB {
 		
 		if($blocks) :
 			foreach($blocks as $id=>$block) :
-			  
-			  if (is_array($block)) :
-			    $name = $block['name'];
-			    $type = $block['type'];
-			  else :
-			    $name = $block;
-			    $type = 'editor';
-			  endif;
-				echo '<p><strong>'.$name.'</strong></p>';
-				if ($type == 'one-liner') :
-				  echo '<input type="text" name="' . $id . '" value="' . htmlentities(get_post_meta($post->ID,'mcb-'.$id,true),null,'UTF-8',false) . '" />';
-			  else :
-				  wp_editor(get_post_meta($post->ID,'mcb-'.$id,true),$id);
+				
+				if (is_array($block)) :
+					$name = $block['name'];
+					$type = $block['type'];
+				else :
+					$name = $block;
+					$type = 'editor';
 				endif;
+				echo '<p><strong>'.$name.'</strong></p>';
+				switch ($type) {
+					case 'one-liner':
+						echo '<input type="text" name="' . $id . '" value="' . htmlentities(get_post_meta($post->ID,'mcb-'.$id,true),null,'UTF-8',false) . '" />';
+						break;
+					case 'textarea':
+						echo '<textarea name="' . $id . '">' . htmlentities(get_post_meta($post->ID,'mcb-'.$id,true),null,'UTF-8',false) . '</textarea>';
+						break;
+					case 'editor':
+					default:
+						wp_editor(get_post_meta($post->ID,'mcb-'.$id,true),$id);
+				}
 			endforeach;
 		endif;
 	}
